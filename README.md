@@ -13,3 +13,27 @@ Stop the timer when the extension session shuts down. Reloading must not accumul
 - Do not make extra model calls, block tools, or terminate Pi to deliver the reminder. Skip both notification and timer creation in noninteractive operation.
 
 This is a reminder inside a running Pi session. It does not wake a sleeping computer or run while Pi is closed. If the computer resumes after 06:00, skip the missed reminder. Use simulated time for testing; do not change your system clock or wait until midnight.
+
+## Running and testing
+
+The extension lives in `.pi/extensions/bedtime/`.
+
+Run the unit tests (Node's built-in test runner; no dependencies):
+
+```bash
+npm test
+```
+
+Preview the reminder in a live Pi session without waiting for midnight:
+
+```bash
+pi --extension ./.pi/extensions/bedtime/index.ts
+```
+
+Then run `/bedtime-test`. The explicit `--extension` flag loads the file without project trust; to have it load automatically in this project instead, run `/trust` once and then `/reload`.
+
+See the automatic reminder and its once-per-date behavior with simulated time (no clock changes, no waiting):
+
+```bash
+npm run demo
+```
