@@ -1,0 +1,10 @@
+{
+  "name": "bed-time-reminder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pi extension that reminds the user once per local date during late-night hours.",
+  "scripts": {
+    "test": "node --test test/*.test.ts"
+  }
+}
