@@ -6,6 +6,7 @@
   "description": "Pi extension that reminds the user once per local date during late-night hours.",
   "scripts": {
     "test": "node --test test/*.test.ts",
-    "demo": "node demo/simulated-time.ts"
+    "demo": "node demo/simulated-time.ts",
+    "demo:ask": "node demo/ask-user.ts"
   }
 }

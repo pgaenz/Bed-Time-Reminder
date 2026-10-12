@@ -37,3 +37,46 @@ See the automatic reminder and its once-per-date behavior with simulated time (n
 ```bash
 npm run demo
 ```
+
+## `ask_user` extension
+
+The separate `ask_user` extension in `.pi/extensions/ask_user/` exposes one model-callable tool for
+resolving a single important, unresolved choice. It does not gate tool calls or add a chat system; it
+only asks the human and returns their answer.
+
+Load it in a live session and let the agent ask a question:
+
+```bash
+pi --extension ./.pi/extensions/ask_user/index.ts
+```
+
+### Contract
+
+Input: one `question`, a brief `reason` it matters, two or three `options` with their `tradeoff`, and
+an optional `recommendation`. The dialog shows the question, reason, each option with its tradeoff,
+and an extra **Write a custom answer…** route.
+
+Result is always explicit:
+
+- `answered` — carries the selected option label or the user's exact custom text.
+- `cancelled` — the user dismissed the dialog or submitted an empty custom answer.
+- `unavailable` — no dialog-capable UI (non-interactive mode).
+
+A `cancelled` or `unavailable` result never selects a default and never claims consent. The tool waits
+for the human before returning `answered`, and asks one question per call
+(`executionMode: "sequential"`).
+
+### When to ask
+
+The tool's `promptGuidelines` tell the model to ask when an unresolved choice would materially change
+user-visible behavior, scope, or rework, and to proceed without asking for explicit requirements or
+routine reversible details.
+
+### Testing
+
+The contract tests use a fake UI and need no dependencies:
+
+```bash
+npm test
+npm run demo:ask
+```
